@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+    <style>
+        #header {
+            display: flex;
+            justify-content: space-around;
+            color: teal;
+            cursor: pointer;
+        }
+
+        table,
+        td,
+        th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        th,
+        td {
+            padding: 15px;
+        }
+
+        thead>tr>th {
+            background-color: teal;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <div>
+            <h2><a href="./index.html">Home</a></h2>
+        </div>
+        <div>
+            <h2><a href="./contact.html">Contact List</a></h2>
+        </div>
+        <div>
+            <h2><a href="./fav.html">Favourites</a></h2>
+        </div>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Mobile
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Add to Favourite
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- <tr>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        1
+                    </td>
+                    <td>
+                        1
+                    </td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    var contactList = JSON.parse(localStorage.getItem('contactList')) || [];
+
+    var favList = JSON.parse(localStorage.getItem('favList')) || [];
+
+    displayData(contactList)
+
+    function displayData(contactList) {
+        document.querySelector('tbody').innerHTML = '';
+        contactList.forEach(ele => {
+            var row = document.createElement('tr');
+
+            var td1 = document.createElement('td');
+            td1.innerText = ele.name;
+
+            console.log(ele.name);
+            var td2 = document.createElement('td');
+            td2.innerText = ele.mobile;
+
+            var td3 = document.createElement('td');
+            td3.innerText = ele.type;
+
+            var td4 = document.createElement('td');
+            td4.innerText = 'Add To Favourite';
+            td4.style.color = 'blue';
+            td4.style.cursor = 'pointer';
+
+            td4.addEventListener('click', function () {
+                favList.push(ele);
+                localStorage.setItem('favList', JSON.stringify(favList));
+                alert(ele.name + " Added to favourite");
+            });
+
+            row.append(td1, td2, td3 , td4);
+            document.querySelector('#tableBody').append(row);
+        });
+    }
+</script>
+
+</html>
